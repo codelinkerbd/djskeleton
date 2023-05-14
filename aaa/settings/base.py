@@ -47,7 +47,7 @@ ROOT_URLCONF = 'aaa.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,10 +66,22 @@ WSGI_APPLICATION = 'aaa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+#     }
+# }
+
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "ENGINE": config('DATABASE_ENGINE', default='django.db.backends.mysql', cast=str),
+        "NAME": config('DATABASE_NAME', default='mydb', cast=str),
+        "USER": config('DATABASE_USER', default='root', cast=str),
+        "PASSWORD": config('DATABASE_PASSWORD', default='', cast=str),
+        "HOST": config('DATABASE_HOST', default='localhost', cast=str),
+        "PORT": config('DATABASE_PORT', default=3306, cast=int),
     }
 }
 
