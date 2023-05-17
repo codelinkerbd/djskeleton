@@ -2,6 +2,8 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 
 # Create your models here.
@@ -9,7 +11,7 @@ from django.contrib import admin
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField("date published")
+    pub_date = models.DateTimeField(auto_now=True, verbose_name=_("Date Published"))
 
     @admin.display(
         boolean=True,
@@ -20,6 +22,9 @@ class Question(models.Model):
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    def get_absolute_url(self):
+        return reverse('poll:poll_details', kwargs={"pk": self.id})
 
     def __str__(self):
         return self.question_text

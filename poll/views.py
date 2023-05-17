@@ -6,6 +6,7 @@ from .models import Question, Choice
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from poll.forms import QuestionForm
 
 # Create your views here.
 
@@ -57,6 +58,7 @@ class IndexView(generic.ListView):
 
 class CreateView(generic.CreateView):
     template_name = 'ca/poll/create.html'
+    form_class = QuestionForm
 
 
 
