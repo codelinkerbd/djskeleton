@@ -33,6 +33,10 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.choise_text
+        return self.choice_text
+
+    @property
+    def get_author(self):
+        pass
     
 
