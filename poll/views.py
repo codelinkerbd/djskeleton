@@ -3,7 +3,7 @@ from django.template import loader
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from .models import Question, Choice
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.utils import timezone
 from poll.forms import QuestionForm
@@ -48,13 +48,14 @@ def vote(request, question_id):
 class IndexView(generic.ListView):
     template_name = "poll/index.html"
     context_object_name = "latest_question_list"
+    paginate_by = 20
 
     def get_queryset(self):
         """
         Return the last five published questions (not including those set to be
         published in the future).
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")
 
 
 class CreateView(generic.CreateView):
@@ -68,6 +69,12 @@ class PollUpdateView(generic.UpdateView):
     template_name = 'ca/poll/edit.html'
     form_class = QuestionForm
     context_object_name = "obj"
+
+
+class PollDeleteView(generic.DeleteView):
+    model = Question
+    # template_name = 'ca/poll/delete.html'
+    success_url = reverse_lazy('poll:index')
 
 
 

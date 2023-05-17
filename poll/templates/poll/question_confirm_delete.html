@@ -1,0 +1,28 @@
+{% extends 'ca/base.html' %}
+{% block content %}
+    <section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card-header">
+                            <div class="card-title">Delete "{{ question.question_text }}" ?</div>
+                        </div>
+                        <div class="card-body">
+                            {{ form }}
+                            <p class="card-text">Do you really want to delete -- "{{ question.question_text }}" ?
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}
