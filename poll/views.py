@@ -7,6 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.utils import timezone
 from poll.forms import QuestionForm
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 # Create your views here.
 
@@ -62,13 +63,15 @@ class CreateView(generic.CreateView):
     model = Question
     template_name = 'ca/poll/create.html'
     form_class = QuestionForm
+    permission_classes = ["is_authenticated"]
 
 
-class PollUpdateView(generic.UpdateView):
+class PollUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Question
     template_name = 'ca/poll/edit.html'
     form_class = QuestionForm
     context_object_name = "obj"
+    permission_classes = ["is_authenticated", "is_superuser"]
 
 
 class PollDeleteView(generic.DeleteView):

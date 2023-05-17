@@ -34,8 +34,10 @@
                                         <td>{{ question.pub_date|date:"D d, M, Y :: H:i a" }}</td>
                                         <td>
                                             <a href="{% url 'poll:poll_details' question.id %}" class="btn btn-info" target="_blank">View</a>
+                                            {% if request.user and request.user.is_authenticated and request.user.is_superuser %}
                                             <a href="{% url 'poll:poll_edit' question.id %}" class="btn btn-warning" target="_blank">Edit</a>
                                             <a href="{% url 'poll:poll_delete' question.id %}" class="btn btn-danger" target="_blank">Delete</a>
+                                            {% endif %}
                                             <a href="{% url 'poll:poll_edit' question.id %}" class="btn btn-secondary" target="_blank">Vote</a>
                                         </td>
                                     </tr>

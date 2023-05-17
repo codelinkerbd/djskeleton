@@ -37,7 +37,9 @@
     {% include 'ca/common/header.html' %}
 {% endblock %}
 {% block sidebar %}
-    {% include 'ca/common/sidebar.html' %}
+    {% if request.user and request.user.is_authenticated and request.user.is_superuser %}
+        {% include 'ca/common/sidebar.html' %}
+    {% endif %}
 {% endblock %}
 
   <main id="main" class="main" style="min-height: 80vh;">
