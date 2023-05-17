@@ -13,6 +13,7 @@ from poll.forms import QuestionForm
 class DetailView(generic.DetailView):
     model = Question
     template_name = "poll/detail.html"
+    context_object_name = "question"
 
     def get_queryset(self):
         """
@@ -57,8 +58,16 @@ class IndexView(generic.ListView):
 
 
 class CreateView(generic.CreateView):
+    model = Question
     template_name = 'ca/poll/create.html'
     form_class = QuestionForm
+
+
+class PollUpdateView(generic.UpdateView):
+    model = Question
+    template_name = 'ca/poll/edit.html'
+    form_class = QuestionForm
+    context_object_name = "obj"
 
 
 
